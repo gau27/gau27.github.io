@@ -6,14 +6,14 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
+title: Just Another Developer's Blog
+email: gaurav.tamba@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  This is my blog, hostded courtesy of GitHub Pages.
+  This is my blog, hosted by GitHub Pages.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://yourdomain.com" # the base hostname & protocol for your site
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: gauravtamba
+github_username:  gau27
 
 # Build settings
 markdown: kramdown

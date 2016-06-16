@@ -6,13 +6,12 @@ categories: gsoc
 ---
 
 So this post comes rather late, but I'd still like to talk about what I did in the first week, and a little into the second week. 
-Firstly, thanks to a pull request offered by my GSoC mentor John (@mohawkjohn), I now have rake tasks setup properly in the repository 
-and rake seems to be working. 
+Firstly, thanks to a pull request offered by my GSoC mentor John (@mohawkjohn), I now have rake tasks set up properly in the repository and rake seems to be working. 
 
-There are installation instructions put up in the [ReadMe][readme] and there are already some sample Kernel files in
-the spec folder to try out various routines on. Apart from cloning the repository, one additional thing you will need to do is download the SPICE toolkit from [here][toolkit]. You may want to keep the entire zip for later, but you'll only need the `cspice.a` file in the lib/ subdirectory. After this follow the instructions in the [ReadMe][readme] and you should be good to go. Be sure to run `bundle install` to install any dependencies that you don't already have.
+There are installation instructions in the [ReadMe][readme] and there are already some sample Kernel files in
+the spec folder to try out various routines on. Apart from cloning the repository, one additional thing you will need to do is download the SPICE toolkit from [here][toolkit]. You may want to keep the entire compressed file for later, but you'll only need the `cspice.a` file in the lib/ subdirectory. After this follow the instructions in the [ReadMe][readme] and you should be good to go. Be sure to run `bundle install` to install any dependencies that you don't already have.
 
-After you're done compiling/installing, run `rake pry` in the gem subdirectory. Now as you may remember, almost any useful task involving the SPICE Toolkit is preceded by loading data through kernel files. The relevant routine to do this is called `furnsh_c()` , and the most direct way to access it through Ruby is by calling the function `SpiceRub::Native.furnsh`. This is not recommended because a specific Ruby class unifying all the kernel related methods is available and SPICE maintains its own internal variables for tracking loaded kernel files / unloading them. Below is a crude dependency sequence :-
+After you're done compiling/installing, run `rake pry` in the gem root directory. If you remember, almost any useful task involving the SPICE Toolkit is preceded by loading data through kernel files. The relevant routine to do this is called `furnsh_c()` , and the most direct way to access it through Ruby is by calling the function `SpiceRub::Native.furnsh`. This is not recommended because SpiceRub has a specific Ruby class unifying all the kernel related methods and also because SPICE maintains its own internal variables for tracking loaded kernel files / unloading them. Below is a crude dependency sequence :-
 
 {% highlight ruby %}
 SpiceRub::KernelPool.load ->  SpiceRub::Native.furnsh -> furnsh_c
@@ -31,12 +30,18 @@ Any subsequent calls to `#instance` will produce the same object.
 kernel_pool = SpiceRub::KernelPool.instance
 => #<SpiceRub::KernelPool:0x00000002db3218>
 
-kernel_pool = SpiceRub::KernelPool.new
-NoMethodError: private method `new' called for SpiceRub::KernelPool:Class
+rogue_kernel_pool = SpiceRub::KernelPool.new
+=> NoMethodError: private method `new' called for SpiceRub::KernelPool:Class
+
+rogue_kernel_pool = SpiceRub::KernelPool.instance
+=> #<SpiceRub::KernelPool:0x00000002db3218>
+
+rogue_kernel_pool == kernel_pool
+=> true
 {% endhighlight %} 
 
 This is to make sure there is only one KernelPool state being maintained at a time. Now we have a bunch of kernel files in the `spec/data/kernels`
-folder which we'll use for this example. There is a reader attribute called `@path` which can be used to point to a particular folder.
+folder which we'll use for this example. There is an accessor attribute called `@path` which can be used to point to a particular folder.
 
 {% highlight ruby %}
 kernel_pool.path = 'spec/data/kernels'
@@ -54,7 +59,7 @@ kernel_pool.load("naif0011.tls")
 => 0
 {% endhighlight %}
 
-Note that this is the same as providing the full relative path of `/spec/data/kernels/naif0011.tls` when the `path`	variable is not set or nil.
+Note that this is the same as providing the full relative path of `spec/data/kernels/naif0011.tls` when the `path`	variable is not set or nil.
 
 Let's load two more files:-
 
@@ -76,8 +81,8 @@ kernel_pool
 {% endhighlight %}
 
 So now if you try to view the `@pool` member of kernel_pool, you'll find 3 SpiceKernel objects with `@loaded=true` and their respective file paths.
-There isn't much to do with a SpiceKernel except unload it, or check its state. Note that you can only load kernel files into a KernelPool object and unload
-them via the SpiceKernel object. 
+There isn't much to do with a `SpiceKernel` object except unload it, or check its state. Note that you can only load kernel files into a `KernelPool` object and unload
+them via the `SpiceKernel` object. 
 
 You can access the kernel pool by calling the `#[]` operator and using the index that was returned on load :-
 
@@ -96,7 +101,7 @@ kernel_pool.count
 
 {% endhighlight %}
 
-So here we unload the first kernel and note that the count drops to 2. If you look up the kernel_pool, you'll find that the kernel
+So here we unload the first kernel and note that the count drops to 2. If you look up `kernel_pool[0]`, you'll find that the kernel
 is still present but it's `@loaded` variable has been set to false which means that it has been removed from the CSPICE internel kernel pool.
 
 {% highlight ruby %}
@@ -116,7 +121,6 @@ kernel_pool.empty?
 kernel_pool.pool
 => []
 {% endhighlight %}
-
 
 And that about wraps up this blog post on basic kernel handling. Since we know how to load data but not use it yet, I'll cover that and the various kernel types
 in the next blog post. Thank you for reading :)

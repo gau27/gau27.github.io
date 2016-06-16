@@ -112,6 +112,9 @@ kernel_pool.clear!
 
 kernel_pool.empty?
 => true
+
+kernel_pool.pool
+=> []
 {% endhighlight %}
 
 

@@ -102,7 +102,7 @@ kernel_pool.count
 {% endhighlight %}
 
 So here we unload the first kernel and note that the count drops to 2. If you look up `kernel_pool[0]`, you'll find that the kernel
-is still present but it's `@loaded` variable has been set to false which means that it has been removed from the CSPICE internel kernel pool.
+is still present but it's `@loaded` variable has been set to false which means that it has been removed from the CSPICE internal kernel pool.
 
 {% highlight ruby %}
 kernel_pool[0]

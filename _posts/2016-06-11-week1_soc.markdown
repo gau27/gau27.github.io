@@ -31,7 +31,8 @@ kernel_pool = SpiceRub::KernelPool.instance
 => #<SpiceRub::KernelPool:0x00000002db3218>
 
 rogue_kernel_pool = SpiceRub::KernelPool.new
-=> NoMethodError: private method `new' called for SpiceRub::KernelPool:Class
+NoMethodError: private method `new' called for SpiceRub::KernelPool:Class
+from (pry):2:in `__pry__'
 
 rogue_kernel_pool = SpiceRub::KernelPool.instance
 => #<SpiceRub::KernelPool:0x00000002db3218>

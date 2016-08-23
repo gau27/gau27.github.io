@@ -21,7 +21,7 @@ There are many similar time scales like this, but SPICE has chosen to use `TDB` 
 
 If you'd like to proceed with the examples, you'd need a `Leap Second Kernel` file to use `SpiceRub::Time` . This is a generic kernel so you can easily use `naif0011.tls` in `spec/data/kernels` of the repository folder.
 
-So Ephemeris Time is the number of seconds elapsed after `Noon January 1, 2000, TDB`. This point in time is also known as the `J2000` epoch. We find that out in an instant by using the `Time.parse` function which is a wrapper function for SPICE's `str2et_c` that converts many formats of strings to `Ephemeris Time`. You can have a look at the various string formats support in its documentation [here][str2et]
+So Ephemeris Time is the number of seconds elapsed after `Noon January 1, 2000, TDB`. This point in time is also known as the `J2000` epoch. We find that out in an instant by using the `Time.parse` function which is a wrapper function for SPICE's `str2et_c` that converts many formats of strings to `Ephemeris Time`. You can have a look at the various string formats supported in its documentation [here][str2et]
 
 {% highlight ruby %}
  SpiceRub::Time.parse("12:00 Jan 1 2000 TDB")

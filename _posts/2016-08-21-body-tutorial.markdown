@@ -15,7 +15,7 @@ One of the main goals of this project was to make the ephemerides functions easi
 
 `Epoch` : An epoch in Ephemeris Time 
 
-SPICE has a certain integer convention for the kind of bodies that it has support for. While there isn't an actual strict range for integer ID classification , it is mentioned [here][int_id] and can be summed up in the following `if` and `elsif` clauses.
+SPICE has a certain integer convention for the kind of bodies that it has support for. Each body can be referenced via a string or an integer id. While there isn't an actual strict range for integer ID classification , it is mentioned [here][int_id] and can be summed up in the following `if` and `elsif` clauses.
 
 {% highlight ruby %}
   if body_id > 2000000
@@ -127,7 +127,7 @@ distance / time
 
 The unit of distance here is `Km`, so the speed of light by this measurement is about pretty close to the textbook figure of `3 x 10 ^ 8  m/s`.
 
-There is also a function to check if a list of bodies are within a radial proximity from an observing body. We already calculated the distance of the moon to be about 367k Km. The function #within_proximity returns a list of all bodies that are within the specified radial distance from the calling body object.
+There is also a function to check if a list of bodies are within a radial proximity from an observing body. We already calculated the distance of the moon to be about 367k Km. The function `within_proximity` returns a list of all bodies that are within the specified radial distance from the calling body object.
 
 {% highlight ruby %}
 
@@ -141,9 +141,11 @@ earth.within_proximity([moon, venus, mercury], 400000, now)
   @type=:satellite>]
 {% endhighlight %}
 
-Now that we've come to the end of the functionality, I would like to state that there is another named argument `aberration_correction` which is basically an error reduction method to provide a more accurate result than the default observation. The default :none option for aberration correction basically provides the geometric observations without any corrections for reception or transmission of photons. For a list of various aberration correction methods available, have a look at the documentation for [spkpos_c][spkpos] to find out if you need an aberration correction on SPICE data.
+Now that we've come to the end of the functionality, I would like to state that there is another named argument `aberration_correction:` which is basically an error reduction method to provide a more accurate result than the default observation. The default `:none` option for aberration correction basically provides the geometric observations without any corrections for reception or transmission of photons. For a list of various aberration correction methods available, have a look at the documentation for [spkpos_c][spkpos] to find out if you need an aberration correction on SPICE data.
 
-Finally, if you need to generate a continuous time series for a body, then SpiceRub::Time has two functions to aid in that
+If you want to look at it another way, no aberration correction would give you the textbook response of rigid geometry, while introducing an aberration correction would give you a somewhat more realistic output accounting for the errors that do happen when these observations are made.
+
+Finally, if you need to generate a continuous time series for a body, then `SpiceRub::Time` has two functions to aid in that
 
 {% highlight ruby %}
 SpiceRub::Time.linear_time_series(now, now + 86400, 4)
@@ -173,7 +175,7 @@ SpiceRub::Time.time_series(now, now + 5 * 86400, step: 86400)
 
 {% endhighlight %}
 
-And that's it for this blog post. I would appreciate any feedback regarding this as I've been juggling the design back and forth very frequently.
+And that's it for this blog post. I would appreciate any feedback regarding this as I've been juggling the design back and forth very frequently. There is large potential of expansion of the `Body` class, particularly creating new classes as when different Bobdy objects would have a corresponding function. (For example, the function `getfov_c` which returns the field of view of an instrument could be an instance function attached to the `Instrument` subclass of `Body`, but this is just potential expansions in the future.)
 
 
 

@@ -38,7 +38,7 @@ I ran into a lot of bugs, learnt more about compiler flags and other building op
 
 Things that I'll tackle (after a short break) include :-
 
-1) Installation Integrity for so that `gem install` does everything needed for installation.
+1) Installation Integrity so that `gem install` does everything needed for installation.
 
 2) Complete Documentation
 

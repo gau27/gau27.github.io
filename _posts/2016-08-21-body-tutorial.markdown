@@ -39,9 +39,9 @@ SPICE has a certain integer convention for the kind of bodies that it has suppor
     :spacecraft
 {% endhighlight %}
 
-It was very tempting to extend a base Body class onto these classes, but I simply did not see the need for it at this point. The way it is at the moment, the `Body` object has a reader attribute type that stores some metadata about the body for the user's convenience. Perhaps as coverage of SPICE improves, this minor thing can be changed later on. 
+It was very tempting to involve inheritance and extend a base Body class onto these potential classes, but I simply did not see the need for it at this point. The way it is at the moment, the `Body` object has a reader attribute type that stores some metadata about the body for the user's convenience. Perhaps as coverage of SPICE improves, this minor thing can be changed later on. 
 
-To create a Body object, you instantiate with either a body name or a body id. Certain bodies such as instruments will require additional kernels to be loaded. To proceed seamlessly, load a leap seconds kernel, a planertary constants kernel, and an ephemeris kernel. (All avaialable in `spec/data/kernels`)
+To create a Body object, you instantiate with either a body name or a body id. Certain bodies such as instruments will require additional kernels to be loaded. To proceed seamlessly, load a leap seconds kernel, a planetary constants kernel, and an ephemeris kernel. (All avaialable in `spec/data/kernels`)
 
 {% highlight ruby %}
 SpiceRub::Body.new(399)

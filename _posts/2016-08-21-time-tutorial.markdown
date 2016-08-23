@@ -35,7 +35,7 @@ SpiceRub::Time.parse("12:00 Jan 1 2000 UTC")
 => #<SpiceRub::Time:0x000000031c28e0 @et=64.18392728473108>
 {% endhighlight %}
 
-So right away we know that UTC was 64ish seconds behind of TDB / ET when it all started in 2000. What would the difference be around right now?
+So right away we know that UTC was 64ish seconds off from TDB / ET at the time of the referenceh J2000 epoch. What would the difference be around right now?
 
 {% highlight ruby %}
 now = SpiceRub::Time.now
@@ -46,11 +46,15 @@ now = SpiceRub::Time.now
 
 {% endhighlight %}
 
+Well, here's a surprise, it's 68.18 now. Before I explain why that is, a brief overview of what the above code does :-
+
 `Time.now` is a convenient way to specify your current UTC timezone. It uses Ruby's core `Time.now` method so this method is only good if you're working in UTC or Earth like Timezones. For a similar purpose, the function `Time.from_time` let's you create a SpiceRub Time object from a Ruby Time object.
 
 The `+/-` operators return a new Time object where the right operand is added/subtracted to the left operand's `@et` when it is a float or integer. If a Time object is supplied , then it does the same with the right operand's ephemeris time instead. (Note that there really isn't a significant meaning to having a Time object whose @et is the difference/sum of two other epochs, however you can increase a certain epoch or decrease it by a constant offset of seconds) 
 
-In our case we used `#to_utc` to convert from ephemeris time to UTC, and then the minus operator gave us a Time object that wasn't really an epoch, but a difference of two epochs, so using `#to_f` got us exactly that. And it appears that UTC has changed by 4 seconds since 2000 with respect to ephemeris time. This is actually the adjustment of "leap seconds" that gets added to UTC to prevent it from falling too far behind other time systems. (Humans really like to hack everything, don't they?)
+In our case we used `#to_utc` to convert from ephemeris time to UTC, and then the minus operator gave us a Time object that wasn't really an epoch, but a difference of two epochs, so using `#to_f` got us exactly that. 
+
+It appears that UTC has changed by 4 seconds since 2000 with respect to ephemeris time. This is actually the adjustment of "leap seconds" that gets added to UTC to prevent it from falling too far behind other time systems. (Humans really like to hack everything, don't they?)
 
 To verify this yourself, open up the kernel `naif0011.tls` in your text editor and Ctrl-F for `DELTET/DELTA_AT` you'll find a list like representation of the following sort :- 
 

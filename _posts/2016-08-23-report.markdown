@@ -50,7 +50,7 @@ Things that I'll tackle (after a short break) include :-
 
 ## **Acknowledgements**
 
-I'd like to thank my mentors for this project, Dr.John Woods, Shaun Stewart, and Victor Shepelev for their guidance and knowledge. John and Shaun with their expertise in Astro research and Victor's vast knowledge about professional Ruby code has helped keep this whole ship together, and I'm looking forward to sailing it a few more journeys. 
+I'd like to thank my mentors for this project, Dr. John Woods, Shaun Stewart, and Victor Shepelev for their guidance and knowledge. John and Shaun with their expertise in Astro research and Victor's vast knowledge about professional Ruby code has helped keep this whole ship together, and I'm looking forward to sailing it a few more journeys. 
 
 Also, John made [NMatrix][nmatrix] which is sort of the backbone for a lot of SpiceRub's functionality.
 

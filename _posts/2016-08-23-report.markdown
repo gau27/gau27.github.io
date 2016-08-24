@@ -54,7 +54,7 @@ I'd like to thank my mentors for this project, Dr. John Woods, Shaun Stewart, an
 
 Also, John made [NMatrix][nmatrix] which is sort of the backbone for a lot of SpiceRub's functionality.
 
-Finally, I would like to thank Andrew Annex who wrote [SpicePy][spiceypy], and Philip Rasch who wrote [spiceminer][miner] , two Python wrappers for the SPICE Toolkit. SpicePy has a high port and test coverage (I lifted a lot of tests from here that weren't avaialble in the SPICE documentation and SpiceMiner had an OOP style API which I referred to while designing the `Body` class.
+Finally, I would like to thank Andrew Annex who wrote [SpicePy][spiceypy], and Philip Rasch who wrote [spiceminer][miner] , two Python wrappers for the SPICE Toolkit. SpicePy has a high port and test coverage (I lifted a lot of tests from here that weren't available in the SPICE documentation and SpiceMiner had an OOP style API which I referred to while designing the `Body` class.
 
 It's been an incredible summer, thank you for reading :)
 

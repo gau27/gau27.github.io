@@ -15,7 +15,7 @@ One of the main goals of this project was to make the ephemerides functions easi
 
 `Epoch` : An epoch in Ephemeris Time 
 
-SPICE has a certain integer convention for the kind of bodies that it has support for. Each body can be referenced via a string or an integer id. While there isn't an actual strict range for integer ID classification , it is mentioned [here][int_id] and can be summed up in the following `if` and `elsif` clauses.
+SPICE has a certain integer convention for the kind of bodies that it has support for. Each body can be referenced via a string or an integer id. While there isn't an actual strict range for integer ID classification , it is mentioned [here][int_id] and can be summed up in the following `if` and `elsif` clauses. (In Ruby constant strings are better off as symbols, so the constructor takes either an integer ID of a string symbol)
 
 {% highlight ruby %}
   if body_id > 2000000
@@ -58,7 +58,7 @@ SpiceRub::Body.new(:earth)
    @name=:earth,
    @type=:planet>
 
-SpiceRub::Body.new(moon)
+SpiceRub::Body.new(:moon)
 => #<SpiceRub::Body:0x0000000214ac88
    @code=301,
    @frame=:J2000,
@@ -143,6 +143,16 @@ earth.within_proximity([moon, venus, mercury], 400000, now)
 
 Now that we've come to the end of the functionality, I would like to state that there is another named argument `aberration_correction:` which is basically an error reduction method to provide a more accurate result than the default observation. The default `:none` option for aberration correction basically provides the geometric observations without any corrections for reception or transmission of photons. For a list of various aberration correction methods available, have a look at the documentation for [spkpos_c][spkpos] to find out if you need an aberration correction on SPICE data.
 
+{% highlight ruby %}
+d1 = moon.distance_from(earth, SpiceRub::Time.now, aberration_correction: :none)
+=> 369111.0550333138
+d2 = moon.distance_from(earth, SpiceRub::Time.now, aberration_correction: :LT)
+=> 369146.60640691273
+
+d2 - d1
+=> 35.55137359892251
+{% endhighlight %}
+
 If you want to look at it another way, no aberration correction would give you the textbook response of rigid geometry, while introducing an aberration correction would give you a somewhat more realistic output accounting for the errors that do happen when these observations are made.
 
 Finally, if you need to generate a continuous time series for a body, then `SpiceRub::Time` has two functions to aid in that
@@ -157,9 +167,9 @@ SpiceRub::Time.linear_time_series(now, now + 86400, 4)
    ]
 {% endhighlight %}
 
-In this case, I took a start time and an end time that was one day after and requested 4 linearly spaced epochs in between. This is basically an interface to `NMatrix.linspace`. 
+In this case, I took a start time and an end time that was one day after and requested 4 linearly spaced epochs. This is basically an interface to `NMatrix.linspace`. 
 
-The other function requires you to input a start time and an end time and a step size that keeps getting added to the start time till the end time is reached. As a contrived example, we'll take two epochs, 5 years apart and ask for a step size of a year, expecting 6 elements.
+The other function requires you to input a start time and an end time and a step size that keeps getting added to the start time till the end time is reached. As a contrived example, we'll take two epochs, 5 days apart and ask for a step size of a day, expecting 6 elements.
 
 {% highlight ruby %}
 

@@ -35,7 +35,7 @@ SpiceRub::Time.parse("12:00 Jan 1 2000 UTC")
 => #<SpiceRub::Time:0x000000031c28e0 @et=64.18392728473108>
 {% endhighlight %}
 
-So right away we know that UTC was 64ish seconds off from TDB / ET at the time of the referenceh J2000 epoch. What would the difference be around right now?
+So right away we know that UTC was 64ish seconds off from TDB / ET at the time of the reference J2000 epoch. What would the difference be around right now?
 
 {% highlight ruby %}
 now = SpiceRub::Time.now

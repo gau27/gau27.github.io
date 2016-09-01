@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Quickstarting GitHub and Git"
+date:   2016-09-1 00:00:35 +0530
+categories: tutorial
+---
+
+GitHub repositories usually have the following workflow. There is code on an online repository, other users duplicates (or "fork") the repositories to their own account, make changes and then try to have the changes pushed back into the original main codebase that everybody uses when the download an official release of that software. 
+
+So the first thing you need to think of is that your GitHub repository is something independent of your local machine. You write, test, and execute your software on your local system but while you are doing this, your online main repository maintains its own independent state until you decide that you're going to update your changes.
+
+Keeping this in mind, I'll quickly work you through some steps. On your browser, open up [this][tut] url, it's a toy repo I made on my GitHub account. On the top right corner you'll see a button with a sort of rotated "share" symbol called `Fork`. Hit this button.
+
+Within a few seconds, you'll be taken to the URL https://github.com/your_username/github-tutorial , and voila, you've forked a copy of my repository and now it is technically yours to do whatever you want with. (From here on, you would follow similar steps for repositories that you have created)
+
+But we'd like to modifiy this repo, and the online browser editor way is much too tedious and has no way of executing code. Open up a non messy folder on your system and type in the following
+
+`git clone https://github.com/your_username/github-tutorial`
+
+This creates the folder `github-tutorial` which you can just `cd` into.
+
+Now open up the file init.py and follow the instructions mentioned. (Just wrap the cute kitty around with comments and you're good to go!)
+
+Now save the file, and type the following
+
+`git status`
+
+{% highlight ruby %}
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   init.py
+{% endhighlight %}
+
+So now git has detected a change in your working directory. (In general, all changes and additions and deletions will be detected and you can add any of them to your commit list by typying `git add` . If you'd just like to commit your entire working director, use `git commit --all`)
+
+Now type `git status` again and you'll notice that the red line is showing up in green. Any modifications not added would still show up in red however, thus allowing you to choose what changes to assign to which commit in what sequence. Use `git add folder/*` to add entire folders but be careful.
+
+
+Finally, with our changes done, we commit the change with the following :-
+
+`git commit -m "Wrapped kitty with comments"`
+
+And that's it, you've successfuly updated your local repository with your change. It is now in theory a fully shippable module right until this last commit, however it is just a local state that you need to push to your online repository
+
+`git push origin`
+
+You'll be prompted to enter your login details and after a few seconds, congratulations, you have pushed your commits to the online repository of your fork of my repository. To quickly revise, whenever you work on your code, all of it has to be commited using `git commit`  to count as part of the repository. To do this, a non zero number of changes must be added using `git add` . It is always a good idea to use a brief meaningful meassage for git commit. Finally, to reflect the changes on the GitHub repository, use `git push origin`
+
+
+[tut]: https://github.com/gau27/github-tutorial

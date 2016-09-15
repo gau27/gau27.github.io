@@ -11,7 +11,7 @@ So the first thing you need to think of is that your GitHub repository is someth
 
 Keeping this in mind, I'll quickly work you through some steps. On your browser, open up [this][tut] url, it's a toy repo I made on my GitHub account. On the top right corner you'll see a button with a sort of rotated "share" symbol called `Fork`. Hit this button.
 
-Within a few seconds, you'll be taken to the URL https://github.com/your_username/github-tutorial , and voila, you've forked a copy of my repository and now it is technically yours to do whatever you want with within its license. (From here on, you would follow similar steps for repositories that you have created)
+Within a few seconds, you'll be taken to the URL `https://github.com/your_username/github-tutorial` , and voila, you've forked a copy of my repository and now it is technically yours to do whatever you want with within its license. (From here on, you would follow similar steps for repositories that you have created)
 
 But we'd like to modifiy this repo, and the online browser editor way is much too tedious and has no way of executing code. Open up a non messy folder on your system and type in the following
 
@@ -34,6 +34,8 @@ Changes not staged for commit:
 {% endhighlight %}
 
 So now git has detected a change in your working directory. (In general, all changes and additions and deletions will be detected and you can add any of them to your commit list by typying `git add` . If you'd just like to commit all the changes in your entire working directory, use `git commit --all`)
+
+Go ahead and type `git add init.py`
 
 Now type `git status` again and you'll notice that the red line is showing up in green. Any modifications not added would still show up in red however, thus allowing you to choose what changes to assign to which commit in what sequence. Use `git add folder/*` to add entire folders but be careful, because very often you'd have files that you don't want to add (like platform dependent object files or db dumps that show up as you code)
 
